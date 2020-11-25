@@ -25,20 +25,20 @@ function setup() {
 
   boy= Matter.Bodies.rectangle(260,350,10,10);
 
-  ground1= new ground(400,390,800,10);
-  tree1= new tree(660,300,60,165);
-  stone1= new stone(150,300,20,20);
+  ground1= new Ground(400,390,800,10);
+  tree1= new Tree(660,300,60,165);
+  stone1= new Stone(150,300,20,20);
 
-  mango1= new mango(550,200,25);
-  mango2= new mango(570,120,25);
-  mango3= new mango(610,150,25);
-  mango4= new mango(640,90,25);
-  mango5= new mango(660,180,25);
-  mango6= new mango(690,110,25);
-  mango7= new mango(735,155,25);
-  mango8= new mango(765,200,25);
+  mango1= new Mango(540,200,25,5);
+  mango2= new Mango(570,100,25,5);
+  mango3= new Mango(610,150,25,5);
+  mango4= new Mango(640,90,25);
+  mango5= new Mango(660,150,25);
+  mango6= new Mango(690,110,25);
+  mango7= new Mango(720,155,25);
+  mango8= new Mango(765,220,25);
   
-  thread=new constraint(stone1.body,{x:230,y:315});
+  thread=new Connector(stone1.body,{x:230,y:315});
   
 }
 
@@ -94,4 +94,14 @@ function keyPressed(){
     Matter.Body.setPosition(stone1.body,{x:140,y:315});
     thread.attacher(stone1.body);
   }
+}
+
+function detectCollision(lstone, lmango){
+mangoBodyPosition= lmango.body.position;
+stoneBodyPosition= lstone.body.position;
+
+ var distance= dist(stoneBodyPosition.x, stoneBodyPosition.y, mangoBodyPosition.x, mangoBodyPosition.y);
+    if(distance<= lmango.r+lstone.r){
+      Matter.Body.setStatic(lmango.body,false);
+    }
 }
